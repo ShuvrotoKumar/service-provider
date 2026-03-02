@@ -11,6 +11,8 @@ app.use(express.json());
 
 const upload=multer({strorage:multer.diskStorage({})})
 
+
+
 app.post("/create-post", upload.single("image"), async (req, res) => {
     // 
     console.log(req.body);
