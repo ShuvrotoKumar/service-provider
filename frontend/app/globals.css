@@ -31,6 +31,24 @@ body {
     gap: 18px;
 }
 
+.feed-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.feed-createBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    padding: 0 14px;
+    border-radius: 6px;
+    background: #4caf50;
+    color: #ffffff;
+    font-weight: 600;
+    text-decoration: none;
+}
+
 .post-card {
     width: 100%;
     background: #ffffff;

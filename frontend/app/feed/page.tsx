@@ -1,5 +1,5 @@
-import React from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const feed = () => {
   const posts = [
@@ -20,6 +20,11 @@ const feed = () => {
   return (
     <main className="feed-page">
       <div className="feed-container">
+        <div className="feed-actions">
+          <Link className="feed-createBtn" href="/createPost">
+            Create post
+          </Link>
+        </div>
         {posts.map((post) => (
           <article className="post-card" key={post.id}>
             <div className="post-imageWrap">
