@@ -18,14 +18,34 @@ export default function CreatePost() {
     }
 
     try {
+      // Create object URL for the uploaded image
+      const imageUrl = URL.createObjectURL(file)
+      
+      // Get existing posts from localStorage
+      const existingPosts = localStorage.getItem('posts')
+      const posts = existingPosts ? JSON.parse(existingPosts) : []
+      
+      // Create new post
+      const newPost = {
+        _id: Date.now().toString(),
+        image: imageUrl,
+        caption: caption
+      }
+      
+      // Add new post to the beginning of the array
+      posts.unshift(newPost)
+      
+      // Save to localStorage
+      localStorage.setItem('posts', JSON.stringify(posts))
+      
       // Mock successful post creation
-      alert('Post created successfully! (Mock)')
+      alert('Post created successfully!')
       
       // Success: go back to feed
       router.push('/feed')
     } catch (err) {
       console.error(err)
-      alert('Network error')
+      alert('Error creating post')
     }
   }
 

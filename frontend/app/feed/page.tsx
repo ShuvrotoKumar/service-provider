@@ -1,5 +1,8 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
+import { useState, useEffect } from 'react'
 
 interface Post {
   _id: string
@@ -7,30 +10,59 @@ interface Post {
   caption: string
 }
 
-async function getPosts(): Promise<Post[]> {
-  // Mock data instead of API call
-  const mockPosts: Post[] = [
-    {
-      _id: "1",
-      image: "https://picsum.photos/400/300?random=1",
-      caption: "Beautiful sunset at the beach"
-    },
-    {
-      _id: "2", 
-      image: "https://picsum.photos/400/300?random=2",
-      caption: "Mountain hiking adventure"
-    },
-    {
-      _id: "3",
-      image: "https://picsum.photos/400/300?random=3",
-      caption: "City lights at night"
+export default function Feed() {
+  const [posts, setPosts] = useState<Post[]>(() => {
+    if (typeof window !== 'undefined') {
+      const storedPosts = localStorage.getItem('posts')
+      if (storedPosts) {
+        return JSON.parse(storedPosts)
+      }
     }
-  ]
-  return mockPosts
-}
+    return [
+      {
+        _id: "1",
+        image: "https://picsum.photos/400/300?random=1",
+        caption: "Beautiful sunset at the beach"
+      },
+      {
+        _id: "2", 
+        image: "https://picsum.photos/400/300?random=2",
+        caption: "Mountain hiking adventure"
+      },
+      {
+        _id: "3",
+        image: "https://picsum.photos/400/300?random=3",
+        caption: "City lights at night"
+      }
+    ]
+  })
 
-export default async function Feed() {
-  const posts = await getPosts()
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const storedPosts = localStorage.getItem('posts')
+      if (storedPosts) {
+        setPosts(JSON.parse(storedPosts))
+      }
+    }
+
+    // Listen for storage changes (when coming from create post page)
+    window.addEventListener('storage', handleStorageChange)
+    
+    // Also check on focus in case same-tab navigation
+    const handleFocus = () => {
+      const storedPosts = localStorage.getItem('posts')
+      if (storedPosts) {
+        setPosts(JSON.parse(storedPosts))
+      }
+    }
+    
+    window.addEventListener('focus', handleFocus)
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange)
+      window.removeEventListener('focus', handleFocus)
+    }
+  }, [])
 
   return (
     <main className="feed-page">
