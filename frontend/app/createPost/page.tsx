@@ -18,17 +18,9 @@ export default function CreatePost() {
     }
 
     try {
-      const res = await fetch('http://localhost:3000/create-post', {
-        method: 'POST',
-        body: formData,
-      })
-
-      if (!res.ok) {
-        const err = await res.text()
-        alert('Failed to create post: ' + err)
-        return
-      }
-
+      // Mock successful post creation
+      alert('Post created successfully! (Mock)')
+      
       // Success: go back to feed
       router.push('/feed')
     } catch (err) {

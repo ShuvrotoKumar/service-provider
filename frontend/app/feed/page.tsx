@@ -8,10 +8,25 @@ interface Post {
 }
 
 async function getPosts(): Promise<Post[]> {
-  const res = await fetch('http://localhost:3000/posts', { cache: 'no-store' })
-  if (!res.ok) throw new Error('Failed to fetch posts')
-  const data = await res.json()
-  return data.posts || []
+  // Mock data instead of API call
+  const mockPosts: Post[] = [
+    {
+      _id: "1",
+      image: "https://picsum.photos/400/300?random=1",
+      caption: "Beautiful sunset at the beach"
+    },
+    {
+      _id: "2", 
+      image: "https://picsum.photos/400/300?random=2",
+      caption: "Mountain hiking adventure"
+    },
+    {
+      _id: "3",
+      image: "https://picsum.photos/400/300?random=3",
+      caption: "City lights at night"
+    }
+  ]
+  return mockPosts
 }
 
 export default async function Feed() {
